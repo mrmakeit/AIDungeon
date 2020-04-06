@@ -26,7 +26,21 @@ def play_dm():
     generator = GPT2Generator(temperature=0.9)
 
     story_manager = UnconstrainedStoryManager(HumanDM())
-    context, prompt = select_game()
+    (
+        setting_key,
+        character_key,
+        name,
+        character,
+        setting_description,
+    ) = select_game()
+
+    if setting_key == "custom":
+        context, prompt = get_custom_prompt()
+
+    else:
+        context, prompt = get_curated_exposition(
+            setting_key, character_key, name, character, setting_description
+        )
     console_print(context + prompt)
     story_manager.start_new_story(prompt, context=context, upload_story=False)
 

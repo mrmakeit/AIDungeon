@@ -35,7 +35,7 @@ class GPT2Generator:
             hparams.override_from_dict(json.load(f))
         seed = np.random.randint(0, 100000)
 
-        config = tf.compat.v1.ConfigProto()
+        config = tf.compat.v1.ConfigProto(log_device_placement=True)
         config.gpu_options.allow_growth = True
         self.sess = tf.compat.v1.Session(config=config)
 
